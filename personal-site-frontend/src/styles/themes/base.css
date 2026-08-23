@@ -13,6 +13,7 @@
  * ============================================================ */
 
 :root {
+  color-scheme: light; /* 本站仅支持浅色模式，强制浏览器以浅色渲染原生控件/滚动条 */
   --radius-card: 12px;
   --radius-inner: 10px;
   --space-section: 48px;

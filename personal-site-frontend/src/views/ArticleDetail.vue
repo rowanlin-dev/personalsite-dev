@@ -536,6 +536,9 @@ const formatDate = (time) => {
   color: var(--text);
   line-height: 1.8;
   font-size: 16px;
+  /* 抵消 .el-card__body 的 24px 左右内边距，正文不再被压窄 */
+  margin-left: -24px;
+  margin-right: -24px;
 }
 .article-content :deep(.md-editor-preview) {
   --md-color: var(--text);
@@ -604,9 +607,9 @@ const formatDate = (time) => {
 /* 目录窗（MdCatalog）：桌面端固定于左侧、不随页面滚动移动，标题可展开/收起 */
 .toc-card {
   position: fixed;
-  top: 88px;
+  top: 104px; /* 导航栏 64px + main padding-top 40px */
   z-index: 20;
-  max-height: calc(100vh - 110px);
+  max-height: calc(100vh - 126px);
   display: flex;
   flex-direction: column;
   border-radius: var(--radius-card);
