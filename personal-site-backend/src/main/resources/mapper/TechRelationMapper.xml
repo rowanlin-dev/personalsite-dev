@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.TechRelationMapper">
+
+    <resultMap id="TechRelationResultMap" type="com.ims.entity.TechRelation">
+        <id property="id" column="id"/>
+        <result property="sourceSkillId" column="source_skill_id"/>
+        <result property="targetSkillId" column="target_skill_id"/>
+        <result property="relationType" column="relation_type"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="TechRelationResultMap">
+        SELECT id, source_skill_id, target_skill_id, relation_type
+        FROM tech_relation
+    </select>
+
+    <select id="findByPair" resultMap="TechRelationResultMap">
+        SELECT id, source_skill_id, target_skill_id, relation_type
+        FROM tech_relation
+        WHERE (source_skill_id = #{sourceSkillId} AND target_skill_id = #{targetSkillId})
+           OR (source_skill_id = #{targetSkillId} AND target_skill_id = #{sourceSkillId})
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tech_relation (source_skill_id, target_skill_id, relation_type)
+        VALUES (#{sourceSkillId}, #{targetSkillId}, #{relationType})
+    </insert>
+
+    <update id="update">
+        UPDATE tech_relation
+        SET relation_type = #{relationType}
+        WHERE source_skill_id = #{sourceSkillId}
+          AND target_skill_id = #{targetSkillId}
+    </update>
+
+    <delete id="deleteByPair">
+        DELETE FROM tech_relation
+        WHERE (source_skill_id = #{sourceSkillId} AND target_skill_id = #{targetSkillId})
+           OR (source_skill_id = #{targetSkillId} AND target_skill_id = #{sourceSkillId})
+    </delete>
+
+    <delete id="deleteBySkillId">
+        DELETE FROM tech_relation
+        WHERE source_skill_id = #{skillId} OR target_skill_id = #{skillId}
+    </delete>
+
+</mapper>

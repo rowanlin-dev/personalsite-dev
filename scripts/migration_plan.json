@@ -1,0 +1,57 @@
+[
+  {
+    "old": "public/14758077-0c6f-411f-9ee5-fdedba719f8a.jpg",
+    "new": "assets/public/blogs/uncategorized/14758077-0c6f-411f-9ee5-fdedba719f8a.jpg",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/21cc51b8-5aca-468c-a64f-97c3d73eb7e7.png",
+    "new": "assets/public/blogs/uncategorized/21cc51b8-5aca-468c-a64f-97c3d73eb7e7.png",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/304e3c70-5de6-421b-84fb-fa26a79adf0d.pdf",
+    "new": "assets/private/resume/1/304e3c70-5de6-421b-84fb-fa26a79adf0d.pdf",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/444b7ba4-4f3b-4ccc-b285-c3cedde8a334.png",
+    "new": "assets/public/blogs/uncategorized/444b7ba4-4f3b-4ccc-b285-c3cedde8a334.png",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/6b4d79a9-e78c-415a-afc5-5222e9e61f0a.png",
+    "new": "assets/public/blogs/uncategorized/6b4d79a9-e78c-415a-afc5-5222e9e61f0a.png",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/8d20465c-a853-4794-8c3d-0c52d251969b.png",
+    "new": "assets/public/blogs/uncategorized/8d20465c-a853-4794-8c3d-0c52d251969b.png",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/8d875e8e-d70b-45c4-bc2c-6568147e7edb.png",
+    "new": "assets/public/blogs/uncategorized/8d875e8e-d70b-45c4-bc2c-6568147e7edb.png",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/b78d0ff1-0556-4d54-af54-c7a515c4db64.png",
+    "new": "assets/public/blogs/uncategorized/b78d0ff1-0556-4d54-af54-c7a515c4db64.png",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/c31810d8-0aec-46a9-8443-2b072a2e811c.jpg",
+    "new": "assets/public/blogs/uncategorized/c31810d8-0aec-46a9-8443-2b072a2e811c.jpg",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/d6aef653-37c9-47e8-96ae-b5252a85c7ef.png",
+    "new": "assets/public/blogs/uncategorized/d6aef653-37c9-47e8-96ae-b5252a85c7ef.png",
+    "reason": "显式映射"
+  },
+  {
+    "old": "public/f29cb362-c1c1-4cd1-a541-be632975928f.jpg",
+    "new": "assets/public/avatars/1/f29cb362-c1c1-4cd1-a541-be632975928f.jpg",
+    "reason": "显式映射"
+  }
+]

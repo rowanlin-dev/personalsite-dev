@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.SkillMapper">
+
+    <resultMap id="SkillResultMap" type="com.ims.entity.Skill">
+        <id property="id" column="id"/>
+        <result property="tagId" column="tag_id"/>
+        <result property="tagName" column="tag_name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="parentName" column="parent_name"/>
+        <result property="isTechStack" column="is_tech_stack"/>
+        <result property="showInTechMap" column="show_in_tech_map"/>
+        <result property="level" column="level"/>
+    </resultMap>
+
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM skill
+    </select>
+
+    <select id="findPage" resultMap="SkillResultMap">
+        SELECT s.id, s.tag_id, t.name AS tag_name, t.parent_id, p.name AS parent_name, t.is_tech_stack, t.show_in_tech_map, s.level
+        FROM skill s
+        JOIN tag t ON s.tag_id = t.id
+        LEFT JOIN tag p ON t.parent_id = p.id
+        ORDER BY ${sortField} ${sortOrder}
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="findById" resultMap="SkillResultMap">
+        SELECT s.id, s.tag_id, t.name AS tag_name, t.parent_id, p.name AS parent_name, t.is_tech_stack, t.show_in_tech_map, s.level
+        FROM skill s
+        JOIN tag t ON s.tag_id = t.id
+        LEFT JOIN tag p ON t.parent_id = p.id
+        WHERE s.id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="SkillResultMap">
+        SELECT s.id, s.tag_id, t.name AS tag_name, t.parent_id, p.name AS parent_name, t.is_tech_stack, t.show_in_tech_map, s.level
+        FROM skill s
+        JOIN tag t ON s.tag_id = t.id
+        LEFT JOIN tag p ON t.parent_id = p.id
+    </select>
+
+    <select id="findByTagId" resultMap="SkillResultMap">
+        SELECT s.id, s.tag_id, t.name AS tag_name, t.parent_id, p.name AS parent_name, t.is_tech_stack, t.show_in_tech_map, s.level
+        FROM skill s
+        JOIN tag t ON s.tag_id = t.id
+        LEFT JOIN tag p ON t.parent_id = p.id
+        WHERE s.tag_id = #{tagId}
+    </select>
+
+    <select id="countByTagId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM skill WHERE tag_id = #{tagId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO skill (tag_id, level)
+        VALUES (#{tagId}, #{level})
+    </insert>
+
+    <update id="update">
+        UPDATE skill
+        SET tag_id = #{tagId},
+            level  = #{level}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM skill WHERE id = #{id}
+    </delete>
+
+</mapper>

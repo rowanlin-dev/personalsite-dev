@@ -1,0 +1,42 @@
+变异测试夹具（纯文本，非产品代码，不参与构建/lint）。
+复刻 BUG-1 修复前的 ArticleDetail.vue 写法，用于验证
+scripts/qa-test-keepalive-seo.mjs 的【用例7】确实能识别出
+「缺少同步守卫」的错误实现 —— 即证明该检测有辨别力，而非永远返回 PASS。
+
+用法：
+  QA_ARTICLE_DETAIL_PATH=scripts/__qa_fixture_legacy_ArticleDetail.txt \
+    node scripts/qa-test-keepalive-seo.mjs
+预期：用例7 的 (a) 项 FAIL（合计 通过14 / 失败1）。
+
+刻意存为 .txt 而非 .vue：放在 scripts/ 下的 .vue 文件会被 IDE 的 Vue 语言服务
+与 ESLint 当作真实组件解析，而下面的代码片段引用了大量未定义符号
+（ref / getArticleDetail / article ...），会产生一堆无意义的红波浪线告警。
+
+--------------------------------- 以下为夹具代码 ---------------------------------
+
+const loadedId = ref(null)
+
+const loadArticle = async (id) => {
+  const [detailRes, listRes] = await Promise.all([
+    getArticleDetail(id),
+    getArticleList({ page: 1, size: 5 })
+  ])
+  article.value = detailRes.data
+  hotArticles.value = listRes.data.list
+  loadedId.value = String(id)
+  setArticleSeo(article.value)
+}
+
+onMounted(async () => {
+  await loadArticle(route.params.id)
+})
+
+onActivated(async () => {
+  const id = route.params.id
+  if (id && String(id) !== loadedId.value) {
+    article.value = null
+    await loadArticle(id)
+  } else if (article.value) {
+    setArticleSeo(article.value)
+  }
+})

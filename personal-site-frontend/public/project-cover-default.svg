@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <!-- 极细网格纹理（40px 间距，低透明度） -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#94a3b8" stroke-opacity="0.14" stroke-width="1"/>
+    </pattern>
+    <!-- 纸感：整体极轻的暖白径向渐变 -->
+    <radialGradient id="paper" cx="50%" cy="42%" r="80%">
+      <stop offset="0%" stop-color="#fdfcf8"/>
+      <stop offset="100%" stop-color="#f4f2ea"/>
+    </radialGradient>
+    <!-- 强调色微光晕（压得很淡） -->
+    <radialGradient id="glowCyan" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowViolet" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 基底 -->
+  <rect width="800" height="450" fill="url(#paper)"/>
+  <rect width="800" height="450" fill="url(#grid)"/>
+
+  <!-- 微光晕点缀 -->
+  <circle cx="600" cy="150" r="180" fill="url(#glowCyan)"/>
+  <circle cx="180" cy="330" r="170" fill="url(#glowViolet)"/>
+
+  <!-- 同心圆环 motif（呼应 TechMap 节点：外环 + 内核） -->
+  <g transform="translate(600 160)">
+    <circle r="72" fill="none" stroke="#22d3ee" stroke-opacity="0.45" stroke-width="2.5"/>
+    <circle r="46" fill="none" stroke="#a78bfa" stroke-opacity="0.35" stroke-width="1.5"/>
+    <circle r="14" fill="#22d3ee" fill-opacity="0.55"/>
+  </g>
+  <g transform="translate(185 320)">
+    <circle r="40" fill="none" stroke="#a78bfa" stroke-opacity="0.4" stroke-width="2"/>
+    <circle r="9" fill="#a78bfa" fill-opacity="0.5"/>
+  </g>
+
+  <!-- 散落小圆点 -->
+  <circle cx="120" cy="120" r="4" fill="#94a3b8" fill-opacity="0.4"/>
+  <circle cx="690" cy="330" r="4" fill="#94a3b8" fill-opacity="0.35"/>
+  <circle cx="420" cy="90" r="3" fill="#22d3ee" fill-opacity="0.4"/>
+
+  <!-- 底部衬线英文小字，拉开字距，浅灰 -->
+  <text x="56" y="400"
+        font-family="Georgia, 'Noto Serif SC', serif"
+        font-size="21" letter-spacing="9"
+        fill="#9aa3ae" fill-opacity="0.75">SELECTED WORK</text>
+  <line x1="56" y1="412" x2="256" y2="412" stroke="#c6ccd4" stroke-opacity="0.6" stroke-width="1"/>
+</svg>

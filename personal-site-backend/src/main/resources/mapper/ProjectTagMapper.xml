@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.ProjectTagMapper">
+
+    <insert id="insert">
+        INSERT INTO project_tag (project_id, tag_id)
+        VALUES (#{projectId}, #{tagId})
+    </insert>
+
+    <select id="findByProjectId" resultType="com.ims.entity.ProjectTag">
+        SELECT project_id, tag_id
+        FROM project_tag
+        WHERE project_id = #{projectId}
+    </select>
+
+    <select id="findByProjectIds" resultType="com.ims.entity.ProjectTag">
+        SELECT project_id, tag_id
+        FROM project_tag
+        WHERE project_id IN
+        <foreach collection="projectIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByTagId" resultType="com.ims.entity.ProjectTag">
+        SELECT project_id, tag_id
+        FROM project_tag
+        WHERE tag_id = #{tagId}
+    </select>
+
+    <delete id="deleteByProjectId">
+        DELETE FROM project_tag WHERE project_id = #{projectId}
+    </delete>
+
+    <delete id="deleteByProjectIdAndTagId">
+        DELETE FROM project_tag
+        WHERE project_id = #{projectId} AND tag_id = #{tagId}
+    </delete>
+
+    <select id="countByTagId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM project_tag WHERE tag_id = #{tagId}
+    </select>
+
+</mapper>

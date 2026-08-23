@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.CollectionArticleMapper">
+
+    <insert id="insertIgnore">
+        INSERT IGNORE INTO collection_article (collection_id, article_id, sort_order)
+        VALUES (#{collectionId}, #{articleId}, #{sortOrder})
+    </insert>
+
+    <delete id="deleteByCollectionIdAndArticleId">
+        DELETE FROM collection_article
+        WHERE collection_id = #{collectionId} AND article_id = #{articleId}
+    </delete>
+
+    <select id="countByCollectionIdAndArticleId" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM collection_article
+        WHERE collection_id = #{collectionId} AND article_id = #{articleId}
+    </select>
+
+    <select id="maxSortOrder" resultType="java.lang.Integer">
+        SELECT MAX(sort_order)
+        FROM collection_article
+        WHERE collection_id = #{collectionId}
+    </select>
+
+    <update id="updateSortOrder">
+        UPDATE collection_article
+        SET sort_order = #{sortOrder}
+        WHERE collection_id = #{collectionId} AND article_id = #{articleId}
+    </update>
+
+    <!-- 只返回公开合集（is_public=1）的归属，供文章详情/列表展示 -->
+    <select id="findPublicByArticleIds" resultType="com.ims.entity.ArticleCollectionLink">
+        SELECT ca.article_id AS articleId, c.id AS collectionId, c.name AS name
+        FROM collection_article ca
+        JOIN collection c ON ca.collection_id = c.id
+        WHERE c.is_public = 1
+          AND ca.article_id IN
+        <foreach collection="articleIds" item="aid" open="(" separator="," close=")">
+            #{aid}
+        </foreach>
+        ORDER BY ca.article_id, ca.sort_order
+    </select>
+
+    <select id="findArticlesByCollectionIdOrdered" resultType="com.ims.entity.ArticleTitleRef">
+        SELECT a.id AS id, a.title AS title
+        FROM collection_article ca
+        JOIN article a ON ca.article_id = a.id
+        WHERE ca.collection_id = #{collectionId}
+        ORDER BY ca.sort_order
+    </select>
+
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.ArticleMapper">
+
+    <sql id="baseColumn">
+        a.id, a.title, a.md_content, a.view_count, a.like_count, a.cover_image, a.image_keys, a.create_time
+    </sql>
+
+    <sql id="listColumn">
+        a.id, a.title, SUBSTRING(a.md_content, 1, 300) AS md_content, a.view_count, a.like_count, a.cover_image, a.create_time
+    </sql>
+
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(DISTINCT a.id)
+        FROM article a
+        <where>
+            <if test="titleKey != null and titleKey != ''">
+                AND a.title LIKE CONCAT('%', #{titleKey}, '%')
+            </if>
+            <if test="tagKey != null and tagKey != ''">
+                AND EXISTS (
+                    SELECT 1 FROM article_tag at
+                    JOIN tag t ON at.tag_id = t.id
+                    LEFT JOIN tag_alias ta ON ta.tag_id = t.id
+                    WHERE at.article_id = a.id
+                      AND (t.name LIKE CONCAT('%', #{tagKey}, '%')
+                           OR ta.alias_name LIKE CONCAT('%', #{tagKey}, '%'))
+                )
+            </if>
+        </where>
+    </select>
+
+    <select id="findPage" resultType="com.ims.entity.Article">
+        SELECT <include refid="listColumn"/>
+        FROM article a
+        <where>
+            <if test="titleKey != null and titleKey != ''">
+                AND a.title LIKE CONCAT('%', #{titleKey}, '%')
+            </if>
+            <if test="tagKey != null and tagKey != ''">
+                AND EXISTS (
+                    SELECT 1 FROM article_tag at
+                    JOIN tag t ON at.tag_id = t.id
+                    LEFT JOIN tag_alias ta ON ta.tag_id = t.id
+                    WHERE at.article_id = a.id
+                      AND (t.name LIKE CONCAT('%', #{tagKey}, '%')
+                           OR ta.alias_name LIKE CONCAT('%', #{tagKey}, '%'))
+                )
+            </if>
+        </where>
+        ORDER BY ${sortField} ${sortOrder}
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="findById" resultType="com.ims.entity.Article">
+        SELECT <include refid="baseColumn"/>
+        FROM article a
+        WHERE a.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO article (title, md_content, cover_image, image_keys, view_count, like_count, create_time)
+        VALUES (#{title}, #{mdContent}, #{coverImage}, #{imageKeys}, 0, 0, NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE article
+        SET title = #{title},
+            md_content = #{mdContent},
+            cover_image = #{coverImage},
+            image_keys = #{imageKeys}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM article WHERE id = #{id}
+    </delete>
+
+    <update id="increaseViewCount">
+        UPDATE article SET view_count = view_count + 1 WHERE id = #{id}
+    </update>
+
+    <update id="increaseLikeCount">
+        UPDATE article SET like_count = like_count + 1 WHERE id = #{id}
+    </update>
+
+    <select id="sumViewCount" resultType="java.lang.Long">
+        SELECT COALESCE(SUM(view_count), 0) FROM article
+    </select>
+
+    <select id="sumLikeCount" resultType="java.lang.Long">
+        SELECT COALESCE(SUM(like_count), 0) FROM article
+    </select>
+
+</mapper>

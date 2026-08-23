@@ -1,0 +1,115 @@
+# ===== 环境变量与敏感配置（真实密钥绝不入库）=====
+.env
+.env.*
+!.env.example
+!personal-site-frontend/.env.example
+
+# ===== 构建产物与依赖 =====
+personal-site-backend/target/
+personal-site-frontend/node_modules/
+personal-site-frontend/dist/
+
+# ===== IDE / 编辑器 =====
+.idea/
+*.iws
+*.iml
+*.ipr
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache
+.vscode/
+
+# ===== OS / 编辑器垃圾文件 =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*~
+
+# ===== AI 工作记忆（项目内，绝不开源）=====
+.workbuddy/
+
+# ===== 安全交付物（含漏洞细节，绝不开源）=====
+security-audit-report.md
+deliverables/
+
+# ===== 旧 git 历史备份（脱敏重建时产生，绝不开源）=====
+.git.bak-*/
+
+# ===== 运维部署配置（含生产桶名/内部拓扑，绝不开源）=====
+deploy/
+
+# ===== 项目文档（功能/发布/SEO 记录，含运维内部信息，不进开源库）=====
+# 本地仍保留作参考；如需公开仓库，请勿取消此忽略。
+docs/
+
+# ===== 证书 / 密钥文件（通配，防误提交）=====
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# ===== 日志（可能含 SQL/令牌/IP/PII）=====
+*.log
+logs/
+
+# ===== 本地配置 / 缓存 / 工具产物 =====
+.cache/
+.wb-*
+personal-site-frontend/.wb-*
+personal-site-backend/scripts/local/
+
+# ===== 本地数据库凭据 / 验证产物（明文，绝不开源）=====
+mysql.cnf
+reset_pwd.sql
+verify*.txt
+update_result.txt
+
+# ===== 过期前端构建备份（rename 出来的 stale，随时可手动删）=====
+personal-site-frontend/.dist_stale_bak/
+personal-site-frontend/dist_stale*/
+personal-site-frontend/dist_old*/
+
+# ===== Python 缓存 =====
+__pycache__/
+*.pyc
+
+# ===== 构建体积验证用的临时输出目录（--outDir dist-verify*，随时可手动删）=====
+# 本工作环境的删除/覆盖防护使得 dist/ 内的既有文件无法被改写，
+# 因此体积验收改用独立输出目录构建，产物与 dist 等价，仅用于测量。
+personal-site-frontend/dist-verify*/
+
+# ===== Maven 构建产物（保留 maven-wrapper.jar）=====
+target/
+!.mvn/wrapper/maven-wrapper.jar
+tools/
+
+# ===== 后端手动编译产物 / 临时日志（非源码，绝不开源）=====
+personal-site-backend/build_out/
+personal-site-backend/build_log*.txt
+
+# ===== 前端临时探针 / QA 产物 / 过期构建备份（开发噪音，绝不开源）=====
+personal-site-frontend/*_probe*.txt
+personal-site-frontend/qa-*.txt
+personal-site-frontend/build-bug*.txt
+personal-site-frontend/routecost*.txt
+personal-site-frontend/sizes*.txt
+personal-site-frontend/*_out.txt
+personal-site-frontend/__probe_root.txt
+personal-site-frontend/_bash_probe.txt
+personal-site-frontend/_clean.txt
+personal-site-frontend/_dirs.txt
+personal-site-frontend/_measure_out.txt
+personal-site-frontend/_qa_out.txt
+personal-site-frontend/dist_bak_*/
+personal-site-frontend/vite.config.js.timestamp-*.mjs
+personal-site-frontend/scripts/__qa_fixture_*
+personal-site-frontend/scripts/*.report.json
+personal-site-frontend/scripts/sitemap-fixture.json
+

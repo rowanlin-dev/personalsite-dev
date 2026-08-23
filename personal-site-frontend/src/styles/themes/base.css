@@ -1,0 +1,161 @@
+/* ============================================================
+ * 主题系统 · 结构层（base）
+ * ------------------------------------------------------------
+ * 本文件只负责两件事：
+ *   1. 基础重置 / 通用空态 / 入场动效等「与配色无关」的样式
+ *   2. 两套主题的【默认变量值】作为兜底（JS 注入失败时仍可显示）
+ *
+ * 实际生效的色值由 src/theme.config.js 选择预设后，
+ * 在运行时以 <style> 形式注入 body.theme-dark / body.theme-light，
+ * 由于注入位置在本文件之后，会覆盖这里的默认值。
+ *
+ * 想换配色？不要改这里，去改 src/theme.config.js。
+ * ============================================================ */
+
+:root {
+  --radius-card: 12px;
+  --radius-inner: 10px;
+  --space-section: 48px;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
+  --font-serif: Georgia, 'Noto Serif SC', 'Songti SC', serif;
+}
+
+/* ---------- 默认变量兜底（会被运行时注入覆盖） ---------- */
+body.theme-dark {
+  --bg: #0a0e17;
+  --bg-soft: #0d1320;
+  --bg-card: #121826;
+  --bg-elevated: #182033;
+  --text: #e6ecf5;
+  --text-secondary: #9aa7bd;
+  --text-muted: #64748b;
+  --accent: #22d3ee;
+  --accent-2: #a78bfa;
+  --accent-soft: rgba(34, 211, 238, 0.12);
+  --border: rgba(148, 163, 184, 0.14);
+  --hover-bg: rgba(34, 211, 238, 0.06);
+  --header-bg: rgba(10, 14, 23, 0.72);
+  --header-border: rgba(148, 163, 184, 0.12);
+  --footer-bg: #080b12;
+  --footer-text: #8a97ab;
+  --menu-text: #9aa7bd;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.25);
+  --el-color-primary: #22d3ee;
+  --el-color-primary-dark-2: #14b8d4;
+  --el-color-primary-light-3: #5fdef2;
+  --el-color-primary-light-5: #8be8f6;
+  --el-color-primary-light-7: #b6f1f9;
+  --el-color-primary-light-8: #cdf6fb;
+  --el-color-primary-light-9: rgba(34, 211, 238, 0.14);
+  color-scheme: dark;
+}
+
+body.theme-light {
+  --bg: #fafaf6;
+  --bg-soft: #f4f3ec;
+  --bg-card: #ffffff;
+  --bg-elevated: #ffffff;
+  --text: #20242c;
+  --text-secondary: #5b6472;
+  --text-muted: #8a93a3;
+  --accent: #0e8aa8;
+  --accent-2: #7c6bd6;
+  --accent-soft: rgba(14, 138, 168, 0.08);
+  --border: rgba(15, 23, 42, 0.09);
+  --hover-bg: rgba(14, 138, 168, 0.05);
+  --header-bg: rgba(255, 255, 255, 0.78);
+  --header-border: rgba(15, 23, 42, 0.08);
+  --footer-bg: #f0efe8;
+  --footer-text: #8a93a3;
+  --menu-text: #5b6472;
+  --shadow-card: 0 2px 12px rgba(15, 23, 42, 0.06);
+  --el-color-primary: #0e8aa8;
+  --el-color-primary-dark-2: #0b7490;
+  --el-color-primary-light-3: #3fa3bc;
+  --el-color-primary-light-5: #6fbccd;
+  --el-color-primary-light-7: #9fd3de;
+  --el-color-primary-light-8: #bfe0e8;
+  --el-color-primary-light-9: rgba(14, 138, 168, 0.1);
+  color-scheme: light;
+}
+
+/* 暗色主题下实心主按钮（青色底）使用深色文字，保证对比度 */
+body.theme-dark .el-button--primary:not(.is-link):not(.is-text):not(.is-plain) {
+  --el-button-text-color: #06252b;
+  --el-button-hover-text-color: #06252b;
+  --el-button-active-text-color: #06252b;
+  --el-button-disabled-text-color: rgba(6, 37, 43, 0.55);
+  font-weight: 600;
+}
+
+/* ---------- 基础重置（不伤害 Element Plus 内部间距） ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  background-color: var(--bg, #fafaf6);
+  color: var(--text, #20242c);
+  transition: background-color 0.25s ease, color 0.25s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- 通用空态 ---------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 56px 24px;
+  color: var(--text-muted);
+  text-align: center;
+}
+.empty-state .empty-icon {
+  font-size: 40px;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+.empty-state p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ---------- 入场动效 ---------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.3s ease both;
+}
+.fade-up.delay-1 { animation-delay: 0.08s; }
+.fade-up.delay-2 { animation-delay: 0.16s; }
+.fade-up.delay-3 { animation-delay: 0.24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

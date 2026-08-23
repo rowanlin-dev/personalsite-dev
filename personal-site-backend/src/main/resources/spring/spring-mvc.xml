@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 扫描 Controller -->
+    <context:component-scan base-package="com.ims.controller"/>
+
+    <!-- 开启 SpringMVC 注解 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="com.ims.util.CustomObjectMapper"/>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 静态资源放行 -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 文件上传解析器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+
+    <!-- 跨域已移除：前后端同源部署（nginx 反代 /api 到本地 Tomcat 127.0.0.1:8080），无需 CORS -->
+
+    <!-- 登录拦截器：fail-closed，默认拦截所有 /api/** 与 /upload，仅放开确认公开的读接口 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <mvc:mapping path="/upload"/>
+
+            <!-- 登录 / 登出接口放开 -->
+            <mvc:exclude-mapping path="/api/admin/login"/>
+            <mvc:exclude-mapping path="/api/admin/logout"/>
+
+            <!-- 文章公开读 -->
+            <mvc:exclude-mapping path="/api/article/list"/>
+            <mvc:exclude-mapping path="/api/article/detail"/>
+            <mvc:exclude-mapping path="/api/article/liked"/>
+            <!-- 匿名点赞：放行写操作，防刷由 LikeRateLimiter（IP+文章冷却 + IP 频率限制）承担 -->
+            <mvc:exclude-mapping path="/api/article/like"/>
+
+            <!-- 合集公开读（私有合集的访问控制在 Controller 内依据登录态判定） -->
+            <mvc:exclude-mapping path="/api/collections/**"/>
+
+            <!-- 项目公开读 -->
+            <mvc:exclude-mapping path="/api/project/list"/>
+            <mvc:exclude-mapping path="/api/project/all"/>
+            <mvc:exclude-mapping path="/api/project/detail"/>
+
+            <!-- 标签公开读（写操作 save/delete/alias/save/alias/delete 及 list-with-aliases 保持拦截） -->
+            <mvc:exclude-mapping path="/api/tag/list"/>
+            <mvc:exclude-mapping path="/api/tag/tree"/>
+            <mvc:exclude-mapping path="/api/tag/search"/>
+            <mvc:exclude-mapping path="/api/tag/alias"/>
+            <mvc:exclude-mapping path="/api/tag/cloud"/>
+            <mvc:exclude-mapping path="/api/tag/tech-map"/>
+
+            <!-- 技能公开读 -->
+            <mvc:exclude-mapping path="/api/skill/list"/>
+            <mvc:exclude-mapping path="/api/skill/all"/>
+            <mvc:exclude-mapping path="/api/skill/detail"/>
+            <mvc:exclude-mapping path="/api/skill/radar"/>
+
+            <!-- 技术栈关系公开读（仅 list 公开；save 为后台写操作，保持鉴权） -->
+            <mvc:exclude-mapping path="/api/tech-relation/list"/>
+
+            <!-- 站点配置公开读（/all 含全部配置含敏感项，保持拦截） -->
+            <mvc:exclude-mapping path="/api/config/about"/>
+            <mvc:exclude-mapping path="/api/config/contact"/>
+            <mvc:exclude-mapping path="/api/config/resume"/>
+            <mvc:exclude-mapping path="/api/config/avatar"/>
+
+            <bean class="com.ims.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+
+        <!-- 强制改密拦截器：fail-closed，映射 /api/admin/**，放开 login/logout/change-credentials 三个逃生口 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/api/admin/**"/>
+
+            <!-- 逃生口：改密门本身不能被拦截，否则无法改密（死锁）；登录/登出也不受此门约束 -->
+            <mvc:exclude-mapping path="/api/admin/login"/>
+            <mvc:exclude-mapping path="/api/admin/logout"/>
+            <mvc:exclude-mapping path="/api/admin/change-credentials"/>
+
+            <bean class="com.ims.interceptor.AdminForceChangeInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

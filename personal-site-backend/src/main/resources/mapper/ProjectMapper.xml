@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.ProjectMapper">
+
+    <select id="count" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM project
+    </select>
+
+    <select id="findPage" resultType="com.ims.entity.Project">
+        SELECT id, title, descript, cover_image, image_keys, github, demo_url
+        FROM project
+        ORDER BY ${sortField} ${sortOrder}
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="findById" resultType="com.ims.entity.Project">
+        SELECT id, title, descript, cover_image, image_keys, github, demo_url
+        FROM project
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultType="com.ims.entity.Project">
+        SELECT id, title, descript, cover_image, image_keys, github, demo_url
+        FROM project
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO project (title, descript, cover_image, image_keys, github, demo_url)
+        VALUES (#{title}, #{descript}, #{coverImage}, #{imageKeys}, #{github}, #{demoUrl})
+    </insert>
+
+    <update id="update">
+        UPDATE project
+        SET title = #{title},
+            descript = #{descript},
+            cover_image = #{coverImage},
+            image_keys = #{imageKeys},
+            github = #{github},
+            demo_url = #{demoUrl}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM project WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.TagMapper">
+
+    <resultMap id="TagResultMap" type="com.ims.entity.Tag">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="isTechStack" column="is_tech_stack"/>
+        <result property="showInTechMap" column="show_in_tech_map"/>
+        <result property="description" column="description"/>
+        <result property="parentName" column="parent_name"/>
+    </resultMap>
+
+    <resultMap id="TagWithAliasesMap" type="com.ims.entity.Tag">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="isTechStack" column="is_tech_stack"/>
+        <result property="showInTechMap" column="show_in_tech_map"/>
+        <result property="description" column="description"/>
+        <result property="parentName" column="parent_name"/>
+        <collection property="aliases" ofType="com.ims.entity.TagAlias">
+            <id property="id" column="alias_id"/>
+            <result property="tagId" column="id"/>
+            <result property="aliasName" column="alias_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="TagResultMap">
+        SELECT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description, p.name AS parent_name
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        ORDER BY t.id
+    </select>
+
+    <select id="findAllWithAliases" resultMap="TagWithAliasesMap">
+        SELECT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description, p.name AS parent_name,
+               a.id AS alias_id, a.alias_name
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        LEFT JOIN tag_alias a ON a.tag_id = t.id
+        ORDER BY t.id
+    </select>
+
+    <select id="findTree" resultMap="TagResultMap">
+        SELECT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description, p.name AS parent_name
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        ORDER BY t.parent_id IS NULL DESC, t.parent_id, t.id
+    </select>
+
+    <select id="findById" resultMap="TagResultMap">
+        SELECT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description, p.name AS parent_name
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        WHERE t.id = #{id}
+    </select>
+
+    <select id="findByIds" resultMap="TagResultMap">
+        SELECT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description, p.name AS parent_name
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        WHERE t.id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByName" resultMap="TagResultMap">
+        SELECT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description, p.name AS parent_name
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        WHERE t.name = #{name}
+    </select>
+
+    <select id="findByParentId" resultMap="TagResultMap">
+        SELECT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description, p.name AS parent_name
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        WHERE t.parent_id = #{parentId}
+    </select>
+
+    <select id="searchByName" resultMap="TagResultMap">
+        SELECT DISTINCT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description, p.name AS parent_name
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        LEFT JOIN tag_alias a ON a.tag_id = t.id
+        WHERE t.name LIKE CONCAT('%', #{keyword}, '%')
+           OR a.alias_name LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY t.id
+    </select>
+
+    <select id="findTechMapTags" resultMap="TagResultMap">
+        SELECT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description, p.name AS parent_name
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        WHERE t.show_in_tech_map = 1
+        ORDER BY t.id
+    </select>
+
+    <select id="findTagStats" resultType="java.util.HashMap">
+        SELECT t.id, t.name, t.parent_id, p.name AS parent_name, s.level, COUNT(at.article_id) AS article_count
+        FROM tag t
+        LEFT JOIN tag p ON t.parent_id = p.id
+        LEFT JOIN skill s ON s.tag_id = t.id
+        LEFT JOIN article_tag at ON at.tag_id = t.id
+        WHERE t.show_in_tech_map = 1
+        GROUP BY t.id, t.name, t.parent_id, p.name, s.level
+    </select>
+
+    <select id="findChildrenByParentId" resultMap="TagResultMap">
+        SELECT t.id, t.name, t.parent_id, t.is_tech_stack, t.show_in_tech_map, t.description
+        FROM tag t
+        WHERE t.parent_id = #{parentId}
+    </select>
+
+    <select id="findTagCloud" resultType="java.util.HashMap">
+        SELECT t.name,
+               (SELECT COUNT(*) FROM article_tag at WHERE at.tag_id = t.id) +
+               (SELECT COUNT(*) FROM project_tag pt WHERE pt.tag_id = t.id) AS count
+        FROM tag t
+        ORDER BY count DESC, t.id
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tag (name, parent_id, is_tech_stack, show_in_tech_map, description)
+        VALUES (#{name}, #{parentId}, #{isTechStack}, #{showInTechMap}, #{description})
+    </insert>
+
+    <update id="update">
+        UPDATE tag
+        SET name            = #{name},
+            parent_id       = #{parentId},
+            is_tech_stack   = #{isTechStack},
+            show_in_tech_map = #{showInTechMap},
+            description     = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM tag WHERE id = #{id}
+    </delete>
+
+    <select id="countByParentId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tag WHERE parent_id = #{parentId}
+    </select>
+
+    <select id="countByName" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tag WHERE name = #{name}
+    </select>
+
+    <select id="countByNameExcludingId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tag WHERE name = #{name} AND id != #{id}
+    </select>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tag
+    </select>
+
+</mapper>

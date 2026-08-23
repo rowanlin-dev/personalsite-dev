@@ -1,0 +1,143 @@
+{
+  "generated_at": "2026-07-30T17:22:07.703462",
+  "bucket": "personal-site-images-1312192644",
+  "region": "ap-guangzhou",
+  "summary": {
+    "total_keys": 16,
+    "deleted": 16,
+    "skipped_not_exist": 0,
+    "errors": 0
+  },
+  "records": [
+    {
+      "key": "public/21cc51b8-5aca-468c-a64f-97c3d73eb7e7.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "assets/public/blogs/uncategorized/21cc51b8-5aca-468c-a64f-97c3d73eb7e7.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "public/444b7ba4-4f3b-4ccc-b285-c3cedde8a334.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "assets/public/blogs/uncategorized/444b7ba4-4f3b-4ccc-b285-c3cedde8a334.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "public/6b4d79a9-e78c-415a-afc5-5222e9e61f0a.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "assets/public/blogs/uncategorized/6b4d79a9-e78c-415a-afc5-5222e9e61f0a.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "public/8d20465c-a853-4794-8c3d-0c52d251969b.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "assets/public/blogs/uncategorized/8d20465c-a853-4794-8c3d-0c52d251969b.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "public/8d875e8e-d70b-45c4-bc2c-6568147e7edb.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "assets/public/blogs/uncategorized/8d875e8e-d70b-45c4-bc2c-6568147e7edb.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "public/b78d0ff1-0556-4d54-af54-c7a515c4db64.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "assets/public/blogs/uncategorized/b78d0ff1-0556-4d54-af54-c7a515c4db64.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "public/c31810d8-0aec-46a9-8443-2b072a2e811c.jpg",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "assets/public/blogs/uncategorized/c31810d8-0aec-46a9-8443-2b072a2e811c.jpg",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "public/d6aef653-37c9-47e8-96ae-b5252a85c7ef.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    },
+    {
+      "key": "assets/public/blogs/uncategorized/d6aef653-37c9-47e8-96ae-b5252a85c7ef.png",
+      "existed_before": true,
+      "deleted": true,
+      "verified_gone": true,
+      "error": null
+    }
+  ],
+  "verification": {
+    "public_prefix": {
+      "count": 3,
+      "orphans_remaining": [],
+      "protected_present": [
+        "14758077-0c6f-411f-9ee5-fdedba719f8a",
+        "304e3c70-5de6-421b-84fb-fa26a79adf0d",
+        "f29cb362-c1c1-4cd1-a541-be632975928f"
+      ]
+    },
+    "uncategorized_prefix": {
+      "count": 1,
+      "orphans_remaining": [],
+      "protected_present": [
+        "14758077-0c6f-411f-9ee5-fdedba719f8a"
+      ]
+    }
+  }
+}

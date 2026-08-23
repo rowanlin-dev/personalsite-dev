@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="蜂潮网络科技工作室">
+  <title>蜂潮网络科技工作室</title>
+  <defs>
+    <linearGradient id="fc-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0e8aa8"/>
+      <stop offset="100%" stop-color="#12b8b0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 底板：主题强调色渐变，与 index.html 的 theme-color #0e8aa8 一致 -->
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="url(#fc-bg)"/>
+
+  <!-- 蜂巢六边形：对应站名中的「蜂」 -->
+  <polygon
+    points="32,12 44.99,19.5 44.99,34.5 32,42 19.01,34.5 19.01,19.5"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="4.5"
+    stroke-linejoin="round"/>
+  <circle cx="32" cy="27" r="4.5" fill="#ffffff"/>
+
+  <!-- 波浪：对应站名中的「潮」 -->
+  <path
+    d="M13 51 q4.75 -6 9.5 0 t9.5 0 t9.5 0 t9.5 0"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="4"
+    stroke-linecap="round"
+    opacity="0.9"/>
+</svg>

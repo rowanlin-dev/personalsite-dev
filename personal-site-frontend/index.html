@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 站点图标：原先指向不存在的 /vite.svg，每次加载产生一次 404（架构评审 S8） -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!--
+      资源提示：文章封面 / 头像 / 项目封面均来自独立的 COS 图片域名（跨源）。
+      提前完成 DNS + TCP + TLS 握手，可省下首张图片的完整建连开销。
+      注意：接口走的是同源相对路径 /api（见 src/api/request.js），
+      对 API 域名做 preconnect 没有收益，因此这里只对图片域名做（架构评审 R3）。
+      __COS_DOMAIN__ 由 vite.config.js 从仓库根 .env 的 COS_DOMAIN 注入。
+    -->
+    <link rel="preconnect" href="https://__COS_DOMAIN__" crossorigin />
+    <link rel="dns-prefetch" href="//__COS_DOMAIN__" />
+
+    <!--
+      以下静态 SEO 头是「爬虫与社交分享抓取器能读到的唯一元数据」。
+      百度、微信/QQ/微博的抓取器不执行 JS，读不到 src/utils/seo.js 动态写入的值，
+      因此这里必须提供一份高质量的站点级默认值。
+      单页路由的差异化 meta 由 router.afterEach -> utils/seo.js 在运行时覆盖。
+    -->
+    <title>蜂潮网络科技工作室 | 全栈开发者的技术博客与作品集</title>
+    <meta
+      name="description"
+      content="蜂潮网络科技工作室 —— 全栈开发者的技术博客与项目作品集，分享 Java、Vue、前后端工程实践与架构思考。"
+    />
+    <meta name="author" content="蜂潮网络科技工作室" />
+    <meta name="theme-color" content="#0e8aa8" />
+    <link rel="canonical" href="__SITE_ORIGIN__/" />
+
+    <!-- Open Graph：微信 / QQ / 微博 / Facebook 分享卡片 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="蜂潮网络科技工作室" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content="蜂潮网络科技工作室 | 全栈开发者的技术博客与作品集" />
+    <meta
+      property="og:description"
+      content="蜂潮网络科技工作室 —— 全栈开发者的技术博客与项目作品集，分享 Java、Vue、前后端工程实践与架构思考。"
+    />
+    <meta property="og:url" content="__SITE_ORIGIN__/" />
+    <meta property="og:image" content="/og-default.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="蜂潮网络科技工作室 | 全栈开发者的技术博客与作品集" />
+    <meta
+      name="twitter:description"
+      content="蜂潮网络科技工作室 —— 全栈开发者的技术博客与项目作品集，分享 Java、Vue、前后端工程实践与架构思考。"
+    />
+    <meta name="twitter:image" content="/og-default.png" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

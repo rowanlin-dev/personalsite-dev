@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.TagAliasMapper">
+
+    <resultMap id="TagAliasResultMap" type="com.ims.entity.TagAlias">
+        <id property="id" column="id"/>
+        <result property="tagId" column="tag_id"/>
+        <result property="aliasName" column="alias_name"/>
+        <result property="tagName" column="tag_name"/>
+    </resultMap>
+
+    <select id="findByTagId" resultMap="TagAliasResultMap">
+        SELECT a.id, a.tag_id, a.alias_name, t.name AS tag_name
+        FROM tag_alias a
+        JOIN tag t ON a.tag_id = t.id
+        WHERE a.tag_id = #{tagId}
+    </select>
+
+    <select id="findAll" resultMap="TagAliasResultMap">
+        SELECT a.id, a.tag_id, a.alias_name, t.name AS tag_name
+        FROM tag_alias a
+        JOIN tag t ON a.tag_id = t.id
+    </select>
+
+    <select id="findByAliasName" resultMap="TagAliasResultMap">
+        SELECT a.id, a.tag_id, a.alias_name, t.name AS tag_name
+        FROM tag_alias a
+        JOIN tag t ON a.tag_id = t.id
+        WHERE a.alias_name = #{aliasName}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tag_alias (tag_id, alias_name)
+        VALUES (#{tagId}, #{aliasName})
+    </insert>
+
+    <update id="update">
+        UPDATE tag_alias
+        SET tag_id     = #{tagId},
+            alias_name = #{aliasName}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM tag_alias WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteByTagId">
+        DELETE FROM tag_alias WHERE tag_id = #{tagId}
+    </delete>
+
+    <select id="countByAliasName" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tag_alias WHERE alias_name = #{aliasName}
+    </select>
+
+    <select id="countByAliasNameExcludingId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tag_alias WHERE alias_name = #{aliasName} AND id != #{id}
+    </select>
+
+    <select id="countByAliasNameExcludingTagId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tag_alias WHERE alias_name = #{aliasName} AND tag_id != #{tagId}
+    </select>
+
+</mapper>

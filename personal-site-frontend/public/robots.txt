@@ -1,0 +1,19 @@
+# robots.txt — 蜂潮网络科技工作室 (https://minipluto.cn)
+# 由 P0-4 新增。托管方式：Vite 会把 public/ 下的文件原样复制到 dist 根目录，
+# nginx（deploy/nginx-minipluto.conf 的 root + try_files）直接对外提供 /robots.txt。
+
+User-agent: *
+Allow: /
+
+# 后台管理区不需要被收录：内容需登录才能访问，被抓取只会产生大量登录页软 404。
+# 说明：/admin 路径本身并非机密（前端路由表已随 JS 产物公开），
+# 真正的访问控制在后端 LoginInterceptor 与前端路由守卫，robots 仅作收录声明。
+# 前端另有纵深防御：/admin/** 路由的 meta.noindex 会由 src/utils/seo.js
+# 写入 <meta name="robots" content="noindex, nofollow">。
+Disallow: /admin
+Disallow: /admin/
+
+# 带追踪参数的 URL 交给 canonical 归一化即可，不在此屏蔽，
+# 以免误伤站内正常带参链接的抓取。
+
+Sitemap: https://minipluto.cn/sitemap.xml

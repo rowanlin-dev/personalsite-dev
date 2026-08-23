@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.CollectionMapper">
+
+    <sql id="baseColumn">
+        c.id, c.name, c.description, c.cover_image, c.is_public, c.create_time, c.update_time
+    </sql>
+
+    <select id="findAll" resultType="com.ims.entity.ArticleCollection">
+        SELECT <include refid="baseColumn"/>, COUNT(ca.article_id) AS article_count
+        FROM collection c
+        LEFT JOIN collection_article ca ON c.id = ca.collection_id
+        GROUP BY c.id
+        ORDER BY c.update_time DESC
+    </select>
+
+    <select id="findById" resultType="com.ims.entity.ArticleCollection">
+        SELECT <include refid="baseColumn"/>
+        FROM collection c
+        WHERE c.id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO collection (name, description, cover_image, is_public, create_time, update_time)
+        VALUES (#{name}, #{description}, #{coverImage}, #{isPublic}, NOW(), NOW())
+    </insert>
+
+    <!-- 动态更新：未传字段（如重命名时未传 is_public）保持原值，避免误翻转公开状态 -->
+    <update id="update">
+        UPDATE collection
+        <set>
+            name = #{name},
+            <if test="description != null">description = #{description},</if>
+            <if test="coverImage != null">cover_image = #{coverImage},</if>
+            <if test="isPublic != null">is_public = #{isPublic},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM collection WHERE id = #{id}
+    </delete>
+
+</mapper>

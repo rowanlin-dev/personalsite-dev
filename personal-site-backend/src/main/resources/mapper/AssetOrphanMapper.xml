@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ims.mapper.AssetOrphanMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO asset_orphan (object_key, reason, created_at)
+        VALUES (#{objectKey}, #{reason}, NOW())
+    </insert>
+
+    <select id="findAll" resultType="com.ims.entity.AssetOrphan">
+        SELECT id, object_key, reason, created_at
+        FROM asset_orphan
+        ORDER BY created_at DESC
+    </select>
+
+    <delete id="deleteById">
+        DELETE FROM asset_orphan WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,33 @@
+{
+  "name": "personal-site-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "clean": "node scripts/clean-dist.mjs",
+    "build": "vite build",
+    "build:clean": "node scripts/clean-dist.mjs && vite build",
+    "build:full": "npm run build:clean && node scripts/gen-sitemap.mjs",
+    "sitemap": "node scripts/gen-sitemap.mjs",
+    "preview": "vite preview",
+    "scan:element": "node scripts/scan-element-usage.mjs"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.6.8",
+    "d3-force": "^3.0.0",
+    "dompurify": "^3.1.6",
+    "element-plus": "^2.6.3",
+    "md-editor-v3": "^4.13.0",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "unplugin-auto-import": "^0.17.8",
+    "unplugin-vue-components": "^0.27.5",
+    "vite": "^5.2.0"
+  }
+}

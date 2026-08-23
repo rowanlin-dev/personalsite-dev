@@ -1,0 +1,171 @@
+{
+  "generatedAt": "2026-08-08T07:14:07.834Z",
+  "scannedFiles": 42,
+  "totalAvailableIcons": 293,
+  "components": {
+    "count": 37,
+    "list": [
+      "ElAside",
+      "ElAvatar",
+      "ElButton",
+      "ElCard",
+      "ElCheckbox",
+      "ElCol",
+      "ElContainer",
+      "ElDialog",
+      "ElDrawer",
+      "ElDropdown",
+      "ElDropdownItem",
+      "ElDropdownMenu",
+      "ElEmpty",
+      "ElForm",
+      "ElFormItem",
+      "ElHeader",
+      "ElIcon",
+      "ElImage",
+      "ElInput",
+      "ElLink",
+      "ElMain",
+      "ElMenu",
+      "ElMenuItem",
+      "ElOption",
+      "ElPagination",
+      "ElPopover",
+      "ElProgress",
+      "ElRow",
+      "ElScrollbar",
+      "ElSelect",
+      "ElSlider",
+      "ElSwitch",
+      "ElTable",
+      "ElTableColumn",
+      "ElTag",
+      "ElTree",
+      "ElUpload"
+    ]
+  },
+  "icons": {
+    "count": 17,
+    "usageRate": "5.80%",
+    "list": [
+      "ArrowDown",
+      "ArrowRight",
+      "Back",
+      "ChatDotRound",
+      "Delete",
+      "Document",
+      "Download",
+      "EditPen",
+      "FolderOpened",
+      "Link",
+      "Menu",
+      "Message",
+      "Pointer",
+      "Search",
+      "Sunny",
+      "Upload",
+      "View"
+    ],
+    "detail": {
+      "ArrowDown": [
+        "src/views/admin/AssetLibrary.vue"
+      ],
+      "ArrowRight": [
+        "src/views/Home.vue"
+      ],
+      "Back": [
+        "src/views/ArticleDetail.vue"
+      ],
+      "ChatDotRound": [
+        "src/views/Home.vue"
+      ],
+      "Delete": [
+        "src/views/admin/AssetLibrary.vue"
+      ],
+      "Document": [
+        "src/views/Home.vue",
+        "src/views/admin/Config.vue"
+      ],
+      "Download": [
+        "src/views/components/AppHeader.vue"
+      ],
+      "EditPen": [
+        "src/views/Articles.vue",
+        "src/views/Home.vue"
+      ],
+      "FolderOpened": [
+        "src/views/Home.vue",
+        "src/views/Projects.vue"
+      ],
+      "Link": [
+        "src/views/Home.vue",
+        "src/views/Projects.vue"
+      ],
+      "Menu": [
+        "src/views/admin/AssetLibrary.vue",
+        "src/views/components/AppHeader.vue"
+      ],
+      "Message": [
+        "src/views/Home.vue"
+      ],
+      "Pointer": [
+        "src/views/ArticleDetail.vue",
+        "src/views/Articles.vue",
+        "src/views/Home.vue"
+      ],
+      "Search": [
+        "src/views/Articles.vue",
+        "src/views/admin/AssetLibrary.vue",
+        "src/views/admin/CollectionManagement.vue"
+      ],
+      "Sunny": [
+        "src/views/components/AppHeader.vue"
+      ],
+      "Upload": [
+        "src/views/admin/AssetLibrary.vue",
+        "src/views/admin/Config.vue"
+      ],
+      "View": [
+        "src/views/ArticleDetail.vue",
+        "src/views/Articles.vue",
+        "src/views/Home.vue",
+        "src/views/Projects.vue"
+      ]
+    }
+  },
+  "serviceComponents": {
+    "count": 2,
+    "list": [
+      "ElMessage",
+      "ElMessageBox"
+    ],
+    "detail": {
+      "ElMessage": [
+        "src/api/request.js",
+        "src/views/ArticleDetail.vue",
+        "src/views/admin/ArticleEdit.vue",
+        "src/views/admin/Articles.vue",
+        "src/views/admin/AssetLibrary.vue",
+        "src/views/admin/AssetPickerModal.vue",
+        "src/views/admin/ChangeCredentials.vue",
+        "src/views/admin/CollectionManagement.vue",
+        "src/views/admin/CollectionPickerModal.vue",
+        "src/views/admin/Config.vue",
+        "src/views/admin/Dashboard.vue",
+        "src/views/admin/ProjectEdit.vue",
+        "src/views/admin/Projects.vue",
+        "src/views/admin/SkillEdit.vue",
+        "src/views/admin/Skills.vue",
+        "src/views/admin/TagManagement.vue"
+      ],
+      "ElMessageBox": [
+        "src/views/admin/Articles.vue",
+        "src/views/admin/AssetLibrary.vue",
+        "src/views/admin/CollectionManagement.vue",
+        "src/views/admin/Projects.vue",
+        "src/views/admin/Skills.vue",
+        "src/views/admin/TagManagement.vue"
+      ]
+    }
+  }
+}
