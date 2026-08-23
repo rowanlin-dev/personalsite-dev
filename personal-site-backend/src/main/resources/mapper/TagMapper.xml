@@ -102,7 +102,9 @@
     </select>
 
     <select id="findTagStats" resultType="java.util.HashMap">
-        SELECT t.id, t.name, t.parent_id, p.name AS parent_name, s.level, COUNT(at.article_id) AS article_count
+        SELECT t.id, t.name, t.parent_id, p.name AS parent_name, s.level,
+               COUNT(at.article_id) AS article_count,
+               (SELECT COUNT(*) FROM project_tag pt WHERE pt.tag_id = t.id) AS project_count
         FROM tag t
         LEFT JOIN tag p ON t.parent_id = p.id
         LEFT JOIN skill s ON s.tag_id = t.id

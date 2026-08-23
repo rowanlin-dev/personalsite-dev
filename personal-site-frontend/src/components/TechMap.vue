@@ -49,7 +49,7 @@
               <span class="mobile-chip-level-text">{{ item.level }}%</span>
             </span>
             <span class="mobile-chip-count">
-              {{ item.count > 0 ? item.count + ' 篇' : '暂无文章' }}
+              {{ item.count > 0 ? item.count + ' 处引用' : '暂无引用' }}
             </span>
           </button>
         </div>
@@ -213,8 +213,12 @@
           />
         </div>
         <div class="tooltip-row">
-          <span class="tooltip-label">博客使用</span>
-          <span class="tooltip-count">{{ hoverNode.count }} 篇文章</span>
+          <span class="tooltip-label">使用频率</span>
+          <span class="tooltip-count">{{ hoverNode.count }} 处引用</span>
+        </div>
+        <div class="tooltip-row tooltip-ref-breakdown">
+          <span class="tooltip-label">明细</span>
+          <span class="tooltip-count">文章 {{ hoverNode.articleCount || 0 }} · 项目 {{ hoverNode.projectCount || 0 }}</span>
         </div>
         <!-- P1-2：若有描述信息则展示简介 -->
         <div v-if="hoverNode.description || hoverNode.desc" class="tooltip-desc">
@@ -488,11 +492,12 @@ const innerRadius = (level) => {
 
 // 使用频率外延：从基准边缘向外延展的厚度 = freqExtend(count)。
 // count=0 → 0（无外延）；count 越大外延越厚（封顶 FREQ_MAX，避免碰撞半径暴涨导致重叠）。
+// count 现含「博客引用 + 项目引用」二者之和，典型高频技术约 30 处，故饱和点取 30。
 const FREQ_MAX = 16
 const freqExtend = (count) => {
   const v = Math.max(0, count || 0)
-  // 以 count=20 篇为饱和点（博客高频技术约 20 篇），封顶 FREQ_MAX
-  const ratio = Math.min(1, v / 20)
+  // 以 count=30 处为饱和点（文章+项目高频技术约 30 处），封顶 FREQ_MAX
+  const ratio = Math.min(1, v / 30)
   return FREQ_MAX * ratio * ratio // 平方曲线：低频增长慢，高频更突出
 }
 
@@ -563,13 +568,18 @@ const mergedNodes = computed(() => {
     seen.add(key)
 
     const category = skill.parent_name || skill.parentName || '其他'
+    // 使用频率 = 博客引用(article_count) + 项目引用(project_count)，两者之和
+    const articleCount = skill.article_count != null ? skill.article_count : (skill.articleCount || 0)
+    const projectCount = skill.project_count != null ? skill.project_count : (skill.projectCount || 0)
     result.push({
       id: skill.id != null ? `skill-${skill.id}` : `tag-${key}`,
       skillId: skill.id != null ? skill.id : null, // 数字技能 id，用于匹配后台关系配置
       name,
       category,
       level: skill.level ?? 0,
-      count: skill.article_count || skill.articleCount || 0
+      count: articleCount + projectCount,
+      articleCount,
+      projectCount
     })
   })
 
