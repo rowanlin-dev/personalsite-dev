@@ -1,6 +1,6 @@
 # PersonalSite
 
-基于 **SSM + Vue 3** 的个人博客系统（课程设计项目）。
+基于 **SSM + Vue 3** 的个人博客系统。
 
 ---
 
@@ -141,7 +141,7 @@ npm run dev
 
 ## 生产发布（前端，一条命令）
 
-前端生产托管在腾讯云 COS（web 桶 `personalsite-web-1312192644`）+ CDN，发布走版本化前缀 + 并行提升：
+前端生产托管在腾讯云 COS + CDN，发布走版本化前缀 + 并行提升：
 
 ```bash
 cd PersonalSite
