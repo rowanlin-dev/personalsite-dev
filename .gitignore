@@ -113,3 +113,6 @@ personal-site-frontend/scripts/__qa_fixture_*
 personal-site-frontend/scripts/*.report.json
 personal-site-frontend/scripts/sitemap-fixture.json
 
+# ===== 运维脚本代码
+scripts/
+

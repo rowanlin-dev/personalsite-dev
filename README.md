@@ -19,7 +19,7 @@
 
 ## 近期主要更新
 
-- **发布流水线优化（v1.0.0）**：前端发布新增 `--fast` 提升（生产机 coscli 并行 sync，231 对象 19min → 4s），新增 `scripts/get_cos_creds.py` 一键注入密钥，发布四步收敛为一条命令。
+- **发布流水线优化（v1.0.0）**：前端发布新增 `--fast` 提升（生产机 coscli 并行 sync，322 对象约 15min → 约 4.5s），新增 `scripts/get_cos_creds.py` 一键注入密钥，发布四步收敛为一条命令。
 - **匿名点赞 + 三层防刷**：无需登录即可点赞；会话去重 + IP/文章 10min 冷却 + IP 全局 1min 30 次限流。
 - **文章目录窗交互升级**：桌面端目录固定左侧可展开/收起，移动端浮动目录图标 + 抽屉。
 - **素材库收录（Q4）**：新建文章保存后自动把 draft- 前缀图片迁移到正式前缀；同桶 COS 链接可一键收录进素材库。
@@ -32,18 +32,11 @@
 
 ## 版本
 
-- 当前版本：**v1.0.0**（首个正式版本，详见 [docs/CHANGELOG.md](docs/CHANGELOG.md) 与 [GitHub Release](https://github.com/rowanlin-dev/PersonalSite/releases)）。
+- 当前版本：**v2.0.0-clean**（脱敏重建公开版；完整变更记录见仓库 Release 页）。
 
-## 文档导航
+## 文档说明
 
-| 文档 | 说明 |
-| --- | --- |
-| [docs/项目需求与设计书.docx](docs/项目需求与设计书.docx) | 课程设计报告（Word 格式） |
-| [docs/CHANGELOG.md](docs/CHANGELOG.md) | 版本更新记录 |
-| [docs/deploy-runbook.md](docs/deploy-runbook.md) | 生产部署 Runbook（含发布流水线） |
-| [docs/API.md](docs/API.md) | 后端接口文档 |
-| [docs/features/](docs/features/) | 复杂功能详细记录 |
-| [docs/stageSummary.md](docs/stageSummary.md) | 项目阶段规划 |
+> 详细设计文档、API 文档、生产部署 Runbook、阶段规划、功能记录等内部资料**不随本仓库公开**。如有需要，请联系作者获取。
 
 ---
 
@@ -107,7 +100,7 @@ JDBC_PASSWORD=your-db-password
 5. **关键：配置 `.env` 路径**
    - 在 Tomcat 运行配置的 `VM options` 中添加：
      ```
-     -DAPP_ENV_PATH=E:/backend_Develop/0-JavaWeb/PersonalSite/PersonalSite/.env
+     -DAPP_ENV_PATH=<项目根目录>/.env
      ```
      请根据实际路径修改。
    - 或者在 `Server` 标签页将 `Working directory` 设置为项目根目录（包含 `.env` 的目录）。
@@ -148,7 +141,7 @@ npm run dev
 
 ## 生产发布（前端，一条命令）
 
-前端生产托管在腾讯云 COS（web 桶 `personalsite-web-1312192644`）+ CDN，发布走版本化前缀 + 并行提升（详见 [docs/deploy-runbook.md](docs/deploy-runbook.md) 第 4B 节）：
+前端生产托管在腾讯云 COS（web 桶 `personalsite-web-1312192644`）+ CDN，发布走版本化前缀 + 并行提升：
 
 ```bash
 cd PersonalSite
@@ -183,7 +176,7 @@ PersonalSite/
 │   │   ├── router/              ← 路由
 │   │   └── store/               ← Pinia 状态
 │   └── package.json
-├── docs/                        ← 文档
+├── docs/                        ← 文档（本地私有，不随仓库公开）
 ├── schema.sql                   ← 数据库初始化脚本
 ├── .env                         ← 本地敏感配置（不提交）
 ├── .env.example                 ← .env 模板
